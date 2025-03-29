@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator fieldEncryptionMigrations {
+  provider = "prisma-field-encryption"
+  output   = "./migrations"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_DATABASE_URL")
+}
+
+model user {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  email     String  @unique
+  fullname  String?
+  is_online Boolean @default(false)
+
+  servers  server[]
+  members  member[]
+  channels channel[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}
+
+model server {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  server_name String?
+  image_url   String?
+  invite_code String  @unique
+  user_id     String  @db.ObjectId
+  user        user    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  members member[]
+  channel channel[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}
+
+enum MemberRole {
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+model member {
+  id      String     @id @default(auto()) @map("_id") @db.ObjectId
+  role    MemberRole @default(GUEST)
+  user_id String     @db.ObjectId
+  user    user       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  server_id String @db.ObjectId
+  server    server @relation(fields: [server_id], references: [id], onDelete: Cascade)
+
+  messages       message[]
+  direct_message directmessage[]
+
+  created_at               DateTime       @default(now())
+  updated_at               DateTime       @default(now()) @updatedAt
+  conversationsInitialised conversation[] @relation("MemberOneRelation")
+  conversationsReceived    conversation[] @relation("MemberTwoRelation")
+}
+
+enum ChannelType {
+  TEXT
+  AUDIO
+  VIDEO
+}
+
+model channel {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  channel_name String
+  type         ChannelType @default(TEXT)
+
+  user_id String @db.ObjectId
+  user    user   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  server_id String @db.ObjectId
+  server    server @relation(fields: [server_id], references: [id], onDelete: Cascade)
+
+  message message[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}
+
+model message {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  content String
+  fileUrl String?
+
+  member_id String @db.ObjectId
+  member    member @relation(fields: [member_id], references: [id], onDelete: Cascade)
+
+  channel_id String  @db.ObjectId
+  channel    channel @relation(fields: [channel_id], references: [id], onDelete: Cascade)
+
+  is_deleted Boolean @default(false)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}
+
+model conversation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  memberOneId String @db.ObjectId
+  memberOne   member @relation("MemberOneRelation", fields: [memberOneId], references: [id], onDelete: Cascade)
+
+  memberTwoId String @db.ObjectId
+  memberTwo   member @relation("MemberTwoRelation", fields: [memberTwoId], references: [id], onDelete: Cascade)
+
+  direct_messages directmessage[]
+}
+
+model directmessage {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  content String
+  fileUrl String?
+
+  member_id String @db.ObjectId
+  member    member @relation(fields: [member_id], references: [id], onDelete: Cascade)
+
+  conversation_id String       @db.ObjectId
+  conversation    conversation @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
+
+  is_deleted Boolean @default(false)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}
