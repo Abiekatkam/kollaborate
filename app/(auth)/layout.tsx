@@ -1,6 +1,9 @@
+import { CLIENT_SIDE_URL } from "@/components/constants/urls";
 import { TypewriterEffect } from "@/components/ui/typewriter-effect";
+import { GetCurrentUserProfile } from "@/lib/authorisation";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
 import { HiCubeTransparent } from "react-icons/hi";
 
@@ -8,9 +11,14 @@ interface AuthenticationLayoutProps {
   children: ReactNode;
 }
 
-const AuthenticationLayout: React.FC<AuthenticationLayoutProps> = ({
+const AuthenticationLayout: React.FC<AuthenticationLayoutProps> = async ({
   children,
 }) => {
+  const user = await GetCurrentUserProfile();
+  if (user) {
+    redirect(CLIENT_SIDE_URL.HOME.INDEX);
+  }
+
   return (
     <React.Fragment>
       <main className="relative flex sm:h-[100vh] h-full sm:min-h-screen selection:bg-green-100 selection:text-green-600">

@@ -27,14 +27,15 @@ const RegisterPage = () => {
         headers: { "Content-Type": "application/json" },
       });
 
+      const error = await res.json();
       if (!res.ok) {
-        const error = await res.json();
         setState((prev) => ({
           ...prev,
           success: false,
           loading: false,
           error: error.message,
         }));
+        return;
       }
       setState((prev) => ({
         ...prev,
@@ -47,6 +48,8 @@ const RegisterPage = () => {
       setState((prev) => ({ ...prev, error: error.message, loading: false }));
     }
   };
+
+  
 
   return (
     <div className="sm:w-[380px] min-h-[220px] w-[335px] h-full flex flex-col items-start px-4 pt-2 rounded-md">
@@ -84,7 +87,7 @@ const RegisterPage = () => {
             inputMode="email"
             autoComplete="email"
             type="email"
-            placeholder="eg: abie@gmail.com"
+            placeholder="eg: your-email@emailaddress.com"
             required
             value={state.email}
             onChange={(event) => {

@@ -6,7 +6,7 @@ const LOCAL_URL = "localhost:3000";
 const DOMAIN_URL = IS_APP_IN_PRODUCTION ? LIVE_URL : LOCAL_URL;
 
 export const APP_CONFIGURATION = {
-  COOKIE_TOKEN : "KollaborateCreds",
+  COOKIE_TOKEN: "KollaborateCreds",
   CURRENT_YEAR: new Date().getFullYear(),
   APPLICATION_NAME: "Kollaborate",
   DEVELOPER_NAME: "Abhishek Katkam",
@@ -25,6 +25,10 @@ export const CLIENT_SIDE_URL = {
     GITHUB_REPOSITORY: "https://github.com/Abiekatkam/kollaborate",
     PORTFOLIO: "https://portfolio-hxpmwalhk-abiekatkams-projects.vercel.app/",
   },
+  HOME: {
+    INDEX: "/v1",
+    SERVERS: "/servers",
+  },
 };
 
 export const SERVER_SIDE_URLS = {
@@ -33,7 +37,7 @@ export const SERVER_SIDE_URLS = {
     LOGIN: "/api/auth/login",
   },
   USER: {
-    MODIFY: "/api/user",
+    FETCH: "/api/user",
     PAGE_PROFILE: "/api/user/profile-page",
   },
   SERVERS: {

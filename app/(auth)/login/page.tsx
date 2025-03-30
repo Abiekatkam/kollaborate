@@ -23,21 +23,22 @@ const LoginPage = () => {
         headers: { "Content-Type": "application/json" },
       });
 
+      const error = await res.json();
       if (!res.ok) {
-        const error = await res.json();
         setState((prev) => ({
           ...prev,
           success: false,
           loading: false,
-          email: "",
           error: error.message,
         }));
+        return;
       }
       setState((prev) => ({
         ...prev,
         success: true,
         loading: false,
         email: "",
+        error: "",
       }));
     } catch (error: any) {
       setState((prev) => ({ ...prev, error: error.message, loading: false }));
