@@ -10,46 +10,51 @@ import { CONSTANT_MESSGAES } from "@/components/constants/messages";
 
 export async function GetCurrentUserProfile() {
   const cookieStore = await cookies();
-  const cookieHeader = cookieStore.toString();
+  const cookieHeader = cookieStore.get(APP_CONFIGURATION.COOKIE_TOKEN)?.value;
+
+  if (!cookieHeader) return null;
 
   const res = await fetch(
     `${APP_CONFIGURATION.BASE_URL}/${SERVER_SIDE_URLS.USER.FETCH}`,
     {
-      headers: { cookie: cookieHeader },
+      headers: { cookie: `${APP_CONFIGURATION.COOKIE_TOKEN}=${cookieHeader}` },
       credentials: "include",
+      cache: "no-store",
     }
   );
 
-  if (!res.ok) {
-    return null;
-  }
+  if (!res.ok) return null;
 
-  return await res.json();
+  return res.json();
 }
 
 export const ValidAuthorisation = async (
-  callback: (user: any | null) => any
+  callback: (user: any) => any
 ): Promise<any> => {
   const cookieStore = await cookies();
   const token = cookieStore.get(APP_CONFIGURATION.COOKIE_TOKEN)?.value;
 
-  if (!token) {
-    return null;
-  }
+  if (!token) return NextResponse.json({ data: null }, { status: 401 });
 
   const activeUser = AUTHORISED_JWT_TOKEN(token);
-  if (typeof activeUser === "object" && activeUser !== null) {
-    const user = await prismaClient.user.findUnique({
-      where: { id: activeUser.id },
-    });
-
-    return callback(user);
-  } else {
+  if (!activeUser || typeof activeUser !== "object") {
     return NextResponse.json(
       { message: CONSTANT_MESSGAES.AUTHORISATION.UNAUTHORISED },
       { status: 401 }
     );
   }
+
+  const user = await prismaClient.user.findUnique({
+    where: { id: activeUser.id },
+  });
+  if (!user) {
+    return NextResponse.json(
+      { message: CONSTANT_MESSGAES.AUTHORISATION.UNAUTHORISED },
+      { status: 401 }
+    );
+  }
+
+  return callback(user);
 };
 
 //   export async function getProfilePage(cookies) {

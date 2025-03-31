@@ -40,17 +40,17 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   const { setTheme } = useTheme();
   return (
-    <div className="relative h-full selection:bg-green-100 selection:text-green-600">
+    <div className="relative h-full selection:bg-green-100 selection:text-green-600 dark:bg-black bg-white">
       <header className="relative m-auto h-[56px] max-w-7xl pt-3">
         <div className="absolute left-0 right-0 top-3 z-20 flex items-center justify-between">
           <Link
             href={"/"}
             className="flex items-center gap-2 p-3 text-2xl group"
           >
-            <span className="w-10 h-10 flex items-center justify-center group-hover:rotate-90 text-green-700 bg-green-200 rounded-full  transition-all ease-in duration-200">
+            <span className="w-10 h-10 flex items-center justify-center group-hover:rotate-90 text-neutral-50 bg-neutral-900 dark:text-neutral-700 dark:bg-neutral-50 rounded-full  transition-all ease-in duration-200">
               <HiCubeTransparent />
             </span>
-            <span className="font-black tracking-[-0.03em] text-neutral-700 group-hover:text-black/70 transition-all ease-in duration-200">
+            <span className="font-black tracking-[-0.03em] dark:text-neutral-100 dark:group-hover:text-neutral-300 text-neutral-900 group-hover:text-neutral-700 transition-all ease-in duration-200">
               Kollaborate
             </span>
           </Link>
@@ -78,14 +78,14 @@ export default function Home() {
             <Link
               target="_blank"
               href={CLIENT_SIDE_URL.SOCIAL_LINKS.GITHUB_REPOSITORY}
-              className="inline-flex h-[34px] items-center justify-center gap-1 rounded-md bg-white/0 px-4 py-2 text-sm font-medium text-[#13131A] ring-1 ring-[#13131A]/10 hover:bg-gray-100 hover:shadow group"
+              className="inline-flex h-[34px] items-center justify-center gap-1 rounded-md bg-white px-4 py-2 text-sm font-medium text-[#13131A] ring-1 ring-[#13131A]/10 hover:bg-gray-100 hover:shadow group"
             >
               <FaGithub className="size-4 mr-1 group-hover:scale-110 transition-all ease-in duration-150" />
               Star on GitHub
             </Link>
             <Link
               href={CLIENT_SIDE_URL.AUTH.LOGIN}
-              className="leading-2 mr-4 inline-flex h-[34px] items-center overflow-hidden rounded-md text-white bg-gray-900 px-4 py-1 text-sm font-medium transition hover:bg-primary/90"
+              className="leading-2 mr-4 inline-flex h-[34px] items-center overflow-hidden rounded-md text-white bg-neutral-900 dark:text-neutral-800 dark:bg-neutral-50 px-4 py-1 text-sm font-medium transition hover:bg-neutral-800 dark:hover:bg-neutral-300"
             >
               Login
             </Link>
@@ -105,19 +105,19 @@ export default function Home() {
 
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
 
-        <span className="hidden md:block absolute top-[20%] left-[25%] z-10 border-2 p-3 -rotate-[15deg] rounded-md bg-neutral-100 text-neutral-400">
+        <span className="hidden md:block absolute top-[20%] left-[25%] z-10 border-2 p-3 -rotate-[15deg] rounded-md bg-neutral-100 text-neutral-400 dark:bg-neutral-700">
           <FaHeadphonesAlt className="size-10" />
         </span>
 
-        <span className="hidden md:block absolute top-[20%] right-[25%] z-10 border-2 p-3 rotate-[15deg] rounded-md bg-neutral-100 text-neutral-400">
+        <span className="hidden md:block absolute top-[20%] right-[25%] z-10 border-2 p-3 rotate-[15deg] rounded-md bg-neutral-100 text-neutral-400 dark:bg-neutral-700">
           <BsChatLeftQuote className="size-10" />
         </span>
 
-        <span className="hidden md:block absolute bottom-[20%] left-[25%] z-10 border-2 p-3 rotate-[15deg] rounded-md bg-neutral-100 text-neutral-400">
+        <span className="hidden md:block absolute bottom-[20%] left-[25%] z-10 border-2 p-3 rotate-[15deg] rounded-md bg-neutral-100 text-neutral-400 dark:bg-neutral-700">
           <MdOutlineKeyboardVoice className="size-10" />
         </span>
 
-        <span className="hidden md:block absolute bottom-[20%] right-[25%] z-10 border-2 p-3 -rotate-[15deg] rounded-md bg-neutral-100 text-neutral-400">
+        <span className="hidden md:block absolute bottom-[20%] right-[25%] z-10 border-2 p-3 -rotate-[15deg] rounded-md bg-neutral-100 text-neutral-400 dark:bg-neutral-700">
           <HiOutlineServerStack className="size-10" />
         </span>
 
@@ -148,7 +148,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mx-auto my-16 max-w-5xl px-3 text-center sm:px-0">
+      <div className="mx-auto my-16 max-w-5xl px-3 text-center sm:px-0 dark:bg-black">
         <h1 className="text-sm capitalize font-black text-pretty leading-[1.15] tracking-[-0.03em] text-neutral-700 dark:text-neutral-400 sm:text-2xl sm:leading-[1.15]">
           Key features
         </h1>

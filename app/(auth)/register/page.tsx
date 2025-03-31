@@ -61,11 +61,11 @@ const RegisterPage = () => {
         }}
       >
         <label className="mb-1 block">
-          <span className="mb-1 block text-sm font-semibold leading-6">
+          <span className="mb-1 block text-sm font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
             Full Name
           </span>
           <input
-            className="block h-8 w-full appearance-none rounded-md bg-white px-3 text-sm text-black shadow-sm ring-1 ring-gray-300 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gray-900 placeholder:italic"
+            className="block h-8 w-full appearance-none rounded-md bg-white dark:bg-neutral-950 px-3 text-sm text-black dark:text-white shadow-sm ring-1 ring-neutral-300 dark:ring-neutral-700 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-neutral-300 placeholder:italic"
             autoFocus
             inputMode="text"
             autoComplete="fullname"
@@ -79,11 +79,11 @@ const RegisterPage = () => {
           />
         </label>
         <label className="mb-1 block">
-          <span className="mb-1 block text-sm font-semibold leading-6">
+          <span className="mb-1 block text-sm font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
             Email Address
           </span>
           <input
-            className="block h-8 w-full appearance-none rounded-md bg-white px-3 text-sm text-black shadow-sm ring-1 ring-gray-300 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gray-900 placeholder:italic"
+            className="block h-8 w-full appearance-none rounded-md bg-white dark:bg-neutral-950 px-3 text-sm text-black dark:text-white shadow-sm ring-1 ring-neutral-300 dark:ring-neutral-700 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-neutral-300 placeholder:italic"
             inputMode="email"
             autoComplete="email"
             type="email"
@@ -98,7 +98,7 @@ const RegisterPage = () => {
         <Button
           type="submit"
           disabled={state.loading}
-          className="h-9 bg-[#09090a] text-white"
+          className="h-9"
         >
           {state.loading ? (
             <CircleLoader
@@ -110,11 +110,11 @@ const RegisterPage = () => {
           )}
         </Button>
 
-        <p className="text-center text-xs font-medium text-zinc-700">
+        <p className="text-center text-xs font-medium text-neutral-700 dark:text-neutral-300">
           Already registered?{" "}
           <Link
             href="/login"
-            className="border-b-[1px] border-zinc-700 pb-[1px] font-bold hover:border-zinc-500 hover:text-zinc-600"
+            className="border-b-[1px] border-zinc-700 pb-[1px] font-bold hover:border-neutral-500 hover:text-neutral-600 dark:text-neutral-300 dark:hover:text-neutral-500"
           >
             Login
           </Link>{" "}

@@ -30,16 +30,18 @@ const AuthenticationLayout: React.FC<AuthenticationLayoutProps> = async ({
             "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]"
           )}
         />
-        <div className="sm:m-auto flex w-fit min-[300px]:flex-col sm:flex-row items-center justify-center py-5 sm:px-8 sm:pt-6 rounded-md border-2 relative z-20 bg-white dark:bg-black">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
+
+        <div className="sm:m-auto flex w-fit min-[300px]:flex-col sm:flex-row items-center justify-center py-5 sm:px-8 sm:pt-6 rounded-md border-2 dark:border-neutral-700 relative z-20 bg-white dark:bg-black">
           <div className="flex flex-col items-center justify-center mb-6 sm:mb-0 w-full max-w-[330px] sm:max-w-[360px]">
             <Link
               href="/"
               className="w-fit flex flex-col items-center justify-center text-4xl group"
             >
-              <span className="p-3 flex items-center justify-center group-hover:rotate-90 text-green-700 bg-green-200 rounded-full text-4xl transition-all ease-in duration-200">
-                <HiCubeTransparent />
-              </span>
-              <span className="mt-1 font-black text-4xl text-[#09090a]">
+              <span className="p-3 flex items-center justify-center group-hover:rotate-90 text-neutral-50 bg-neutral-900 dark:text-neutral-700 dark:bg-neutral-50 rounded-full  transition-all ease-in duration-200">
+              <HiCubeTransparent />
+            </span>
+              <span className="mt-1 font-black text-4xl text-neutral-900 dark:text-neutral-300">
                 Kollaborate
               </span>
             </Link>

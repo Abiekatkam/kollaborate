@@ -28,9 +28,9 @@ export async function POST(request: NextRequest) {
       const token = GENERATE_JWT_TOKEN({ email });
       let nodeMailerConfiguration = {};
 
-      const Action_Link = `${APP_CONFIGURATION.BASE_URL}/api/auth?token=${token}&type=register`;
+      const Action_Link = `${APP_CONFIGURATION.BASE_URL}/api/auth?token=${token}&type=login`;
 
-      const loginEmailHtml = render(LoginEmail({ action_link: Action_Link }));
+      const loginEmailHtml = await render(LoginEmail({ action_link: Action_Link }));
 
       nodeMailerConfiguration = {
         from: process.env.EMAIL_FROM || "noreply@example.com",

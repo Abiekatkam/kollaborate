@@ -9,7 +9,7 @@ export default async function RootPage() {
     where: {
       members: {
         some: {
-          user_id: user.id,
+          user_id: user?.id,
         },
       },
     },
