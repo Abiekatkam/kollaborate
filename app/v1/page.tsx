@@ -1,4 +1,5 @@
 "use server";
+import CreateServerModal from "@/components/modals/create-server-modal";
 import { GetCurrentUserProfile } from "@/lib/authorisation";
 import prismaClient from "@/lib/prisma";
 import { redirect } from "next/navigation";
@@ -20,8 +21,7 @@ export default async function RootPage() {
   }
   return (
     <>
-      <h1>Hello servers</h1>
-      {/* <CreateServerModal /> */}
+      <CreateServerModal />
     </>
   );
 }

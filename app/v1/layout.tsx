@@ -1,5 +1,4 @@
 import { CLIENT_SIDE_URL } from "@/components/constants/urls";
-
 import { Toaster } from "@/components/ui/sonner";
 import { GetCurrentUserProfile } from "@/lib/authorisation";
 import { redirect } from "next/navigation";
@@ -21,8 +20,8 @@ export default async function HomeLayout({
   }
 
   return (
-    <main className="flex h-full dark:bg-[#09090a] flex-col text-gray-600 dark:text-gray-300 antialiased">
-      <NextTopLoader color="#7c3aed" height={2} showSpinner={false} />
+    <main className="flex h-full flex-col antialiased selection:bg-green-100 selection:text-green-600">
+      <NextTopLoader color="#00a63e" height={2} showSpinner={false} />
 
       {/* <SocketProvider userId={user?.id}> */}
       {/* <ModalProvider /> */}
@@ -35,6 +34,7 @@ export default async function HomeLayout({
       </div>
       {/* </QueryProvider> */}
       {/* </SocketProvider> */}
+
       <Toaster
         closeButton
         position="top-right"

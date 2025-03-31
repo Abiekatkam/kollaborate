@@ -23,9 +23,9 @@ export default function RootLayout({
         className={`${font.className} antialiased dark:bg-black bg-white`}
       >
         <ThemeProvider
-          attribute="class"
+          attribute={"class"}
           defaultTheme="system"
-          enableSystem={false}
+          enableSystem={true}
           disableTransitionOnChange
         >
           {children}
