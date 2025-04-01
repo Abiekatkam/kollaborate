@@ -17,6 +17,7 @@ model user {
   email     String  @unique
   fullname  String?
   is_online Boolean @default(false)
+  image_url String?
 
   servers  server[]
   members  member[]
@@ -42,14 +43,15 @@ model server {
 }
 
 enum MemberRole {
-  ADMIN
-  MODERATOR
-  GUEST
+  LEADER
+  COLEADER
+  ELDER
+  MEMBER
 }
 
 model member {
   id      String     @id @default(auto()) @map("_id") @db.ObjectId
-  role    MemberRole @default(GUEST)
+  role    MemberRole @default(MEMBER)
   user_id String     @db.ObjectId
   user    user       @relation(fields: [user_id], references: [id], onDelete: Cascade)
 

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { HiCubeTransparent } from "react-icons/hi";
-import { FaGithub, FaLink, FaLinkedin } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { FaHeadphonesAlt } from "react-icons/fa";
 import { BsChatLeftQuote } from "react-icons/bs";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
@@ -28,17 +28,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
+
+import { ThemeToggle } from "@/components/common/theme-toggle";
+import ToggleAuthButton from "@/components/common/toggle-auth";
 
 export default function Home() {
-  const { setTheme } = useTheme();
   return (
     <div className="relative h-full selection:bg-green-100 selection:text-green-600 dark:bg-black bg-white">
       <header className="relative m-auto h-[56px] max-w-7xl pt-3">
@@ -55,26 +49,7 @@ export default function Home() {
             </span>
           </Link>
           <div className="mt-5 flex justify-center gap-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                  <span className="sr-only">Toggle theme</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setTheme("light")}>
-                  Light
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
-                  Dark
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
-                  System
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <ThemeToggle />
             <Link
               target="_blank"
               href={CLIENT_SIDE_URL.SOCIAL_LINKS.GITHUB_REPOSITORY}
@@ -83,12 +58,7 @@ export default function Home() {
               <FaGithub className="size-4 mr-1 group-hover:scale-110 transition-all ease-in duration-150" />
               Star on GitHub
             </Link>
-            <Link
-              href={CLIENT_SIDE_URL.AUTH.LOGIN}
-              className="leading-2 mr-4 inline-flex h-[34px] items-center overflow-hidden rounded-md text-white bg-neutral-900 dark:text-neutral-800 dark:bg-neutral-50 px-4 py-1 text-sm font-medium transition hover:bg-neutral-800 dark:hover:bg-neutral-300"
-            >
-              Login
-            </Link>
+            <ToggleAuthButton />
           </div>
         </div>
       </header>

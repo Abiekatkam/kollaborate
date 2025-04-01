@@ -26,8 +26,9 @@ export const CLIENT_SIDE_URL = {
     PORTFOLIO: "https://portfolio-hxpmwalhk-abiekatkams-projects.vercel.app/",
   },
   HOME: {
+    HOMEPAGE: "/",
     INDEX: "/v1",
-    SERVERS: "/servers",
+    SERVERS: "/v1/servers",
   },
 };
 
@@ -41,7 +42,7 @@ export const SERVER_SIDE_URLS = {
     PAGE_PROFILE: "/api/user/profile-page",
   },
   SERVERS: {
-    INSERT: "/api/server",
+    INSERT: "/api/servers",
   },
   CHANNELS: {
     INSERT: "/api/channels",

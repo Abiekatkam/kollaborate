@@ -9,19 +9,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-// import FileUpload from "@/components/common/FileUpload";
 import { useRouter } from "next/navigation";
 import CircleLoader from "../common/circle-loader";
 import { SERVER_SIDE_URLS } from "../constants/urls";
 import FileUpload from "../common/file-upload";
 import { CONSTANT_MESSGAES } from "../constants/messages";
-import { useModal } from "@/hooks/use-modal-store";
 
-const CreateServerModal = () => {
+const InitialServerModal = () => {
   const router = useRouter();
-  const { isOpen, onClose, type } = useModal();
-
-  const isModalOpen = isOpen && type === "CREATE_SERVER";
 
   const [state, setState] = useState({
     error: "",
@@ -83,7 +78,6 @@ const CreateServerModal = () => {
           fileType: "",
         });
         router.refresh();
-        onClose();
       } catch (error) {
         console.error("Initial server error:", error);
         setState((prev) => ({
@@ -101,20 +95,8 @@ const CreateServerModal = () => {
     }
   };
 
-  const onHandleClose = () => {
-    setState({
-      error: "",
-      loading: false,
-      isFileUploaded: false,
-      serverName: "",
-      imageUrl: "",
-      fileType: "",
-    });
-    onClose();
-  };
-
   return (
-    <Dialog open={isModalOpen} onOpenChange={onHandleClose}>
+    <Dialog open>
       <DialogContent className="sm:max-w-md p-0 border-2 dark:border-neutral-700 border-neutral-400">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-xl text-center capitalize font-bold">
@@ -189,4 +171,4 @@ const CreateServerModal = () => {
   );
 };
 
-export default CreateServerModal;
+export default InitialServerModal;

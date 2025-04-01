@@ -32,5 +32,9 @@ export const CONSTANT_MESSGAES = {
       "User account does not exist, please register",
     CLIENT_USER_ACCOUNT_EXISTS: "User account already exists",
     SERVER_INVALID_TOKEN: "Invalid token",
+    SERVER_TOKEN_EXPIRED: "Token expired, please login again",
+
+    SERVER_CREATION_ERROR: "An error occurred while creating the server. Please try again.",
+
   },
 };

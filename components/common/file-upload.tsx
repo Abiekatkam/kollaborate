@@ -4,6 +4,7 @@ import { UploadDropzone } from "@/lib/uploadthing";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { FileIcon, X } from "lucide-react";
+import { error } from "console";
 
 interface FileUploadProps {
   endPoint: "imageUploader" | "messageFile";
@@ -80,6 +81,7 @@ const FileUpload = ({ endPoint, setState, state }: FileUploadProps) => {
           ...state,
           imageUrl: res?.[0].ufsUrl,
           fileType: res?.[0].type,
+          error: "",
           isFileUploaded: false,
         });
       }}

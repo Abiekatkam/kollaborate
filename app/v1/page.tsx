@@ -1,5 +1,6 @@
 "use server";
-import CreateServerModal from "@/components/modals/create-server-modal";
+import { CLIENT_SIDE_URL } from "@/components/constants/urls";
+import InitialServerModal from "@/components/modals/initial-server-modal";
 import { GetCurrentUserProfile } from "@/lib/authorisation";
 import prismaClient from "@/lib/prisma";
 import { redirect } from "next/navigation";
@@ -17,11 +18,11 @@ export default async function RootPage() {
   });
 
   if (server) {
-    return redirect(`/v1/servers/${server?.id}`);
+    return redirect(`${CLIENT_SIDE_URL.HOME.SERVERS}/${server?.id}`);
   }
   return (
     <>
-      <CreateServerModal />
+      <InitialServerModal />
     </>
   );
 }

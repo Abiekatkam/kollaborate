@@ -42,8 +42,16 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     if (!existingUser && type === "register") {
+      const initials = fullname
+        .split(" ")
+        .map((word: string) => word[0])
+        .join("")
+        .toUpperCase();
+      const imageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+        initials
+      )}&background=random`;
       existingUser = await prismaClient.user.create({
-        data: { email, fullname },
+        data: { email, fullname, image_url: imageUrl },
       });
     }
 
