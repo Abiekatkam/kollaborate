@@ -45,7 +45,6 @@ model server {
 enum MemberRole {
   LEADER
   COLEADER
-  ELDER
   MEMBER
 }
 

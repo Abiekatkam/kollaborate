@@ -33,8 +33,10 @@ export const CONSTANT_MESSGAES = {
     CLIENT_USER_ACCOUNT_EXISTS: "User account already exists",
     SERVER_INVALID_TOKEN: "Invalid token",
     SERVER_TOKEN_EXPIRED: "Token expired, please login again",
-
-    SERVER_CREATION_ERROR: "An error occurred while creating the server. Please try again.",
-
+    SERVER_ID_MISSING: "Server ID is missing",
+    SERVER_CREATION_ERROR:
+      "An error occurred while creating the server. Please try again.",
+    SERVER_UPDATE_FAILED:
+      "An error occurred while updating the server. Please try again.",
   },
 };

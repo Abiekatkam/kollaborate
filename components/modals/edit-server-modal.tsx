@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,19 +9,23 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-// import FileUpload from "@/components/common/FileUpload";
 import { useRouter } from "next/navigation";
-import CircleLoader from "../common/circle-loader";
+import axios from "axios";
+import { useModal } from "@/hooks/use-modal-store";
 import { SERVER_SIDE_URLS } from "../constants/urls";
 import FileUpload from "../common/file-upload";
-import { CONSTANT_MESSGAES } from "../constants/messages";
-import { useModal } from "@/hooks/use-modal-store";
+import CircleLoader from "../common/circle-loader";
 
-const CreateServerModal = () => {
+const EditServerModal = () => {
   const router = useRouter();
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
+  const { server } = data;
 
-  const isModalOpen = isOpen && type === "CREATE_SERVER";
+  const isModalOpen = isOpen && type === "EDIT_SERVER";
+
+  const handleModalClose = () => {
+    onClose();
+  };
 
   const [state, setState] = useState({
     error: "",
@@ -35,62 +39,32 @@ const CreateServerModal = () => {
   const handleServerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setState((prev) => ({ ...prev, loading: true, error: "" }));
-
     if (state.imageUrl !== "" && state.serverName !== "") {
       if (state.serverName.length < 4) {
         setState((prev) => ({
           ...prev,
           loading: false,
-          error: "Server name must contain more than 3 characters.",
+          error: "Server name must contains more than 3 character.",
         }));
-        return;
-      }
-
-      if (state.imageUrl === "") {
-        setState((prev) => ({
-          ...prev,
-          loading: false,
-          error: "Server image is required.",
-        }));
-        return;
-      }
-
-      try {
-        const response = await fetch(SERVER_SIDE_URLS.SERVERS.INSERT, {
-          method: "POST",
-          body: JSON.stringify({
-            serverName: state.serverName,
-            imageUrl: state.imageUrl,
-          }),
-          headers: { "Content-Type": "application/json" },
-        });
-
-        if (!response.ok) {
-          setState((prev) => ({
-            ...prev,
+      } else {
+        try {
+          await axios.patch(
+            `${SERVER_SIDE_URLS.SERVERS.INSERT}/${server?.id}`,
+            state
+          );
+          setState({
+            error: "",
             loading: false,
-            error: CONSTANT_MESSGAES.COMMON.SERVER_CREATION_ERROR,
-          }));
-          return;
+            serverName: "",
+            imageUrl: "",
+            isFileUploaded: false,
+            fileType: "",
+          });
+          router.refresh();
+          onClose();
+        } catch (error) {
+          console.log("initial server error: ", error);
         }
-
-        setState({
-          error: "",
-          loading: false,
-          serverName: "",
-          imageUrl: "",
-          isFileUploaded: false,
-          fileType: "",
-        });
-        router.refresh();
-        onClose();
-      } catch (error) {
-        console.error("Initial server error:", error);
-        setState((prev) => ({
-          ...prev,
-          loading: false,
-          error: CONSTANT_MESSGAES.COMMON.SERVER_CREATION_ERROR,
-        }));
       }
     } else {
       setState((prev) => ({
@@ -101,37 +75,35 @@ const CreateServerModal = () => {
     }
   };
 
-  const onHandleClose = () => {
-    setState({
-      error: "",
-      loading: false,
-      isFileUploaded: false,
-      serverName: "",
-      imageUrl: "",
-      fileType: "",
-    });
-    onClose();
-  };
+  useEffect(() => {
+    if (server) {
+      setState((prev: any) => ({
+        ...prev,
+        serverName: server?.server_name,
+        imageUrl: server?.image_url,
+      }));
+    }
+  }, [server]);
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={onHandleClose}>
+    <Dialog open={isModalOpen} onOpenChange={handleModalClose}>
       <DialogContent className="sm:max-w-md p-0 selection:bg-fuchsia-100 selection:text-fuchsia-600 dark:selection:bg-fuchsia-600 dark:selection:text-fuchsia-100 border-2 dark:border-neutral-700 border-neutral-400">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-xl text-center capitalize font-bold">
-            Create your First Server
+            Edit a Server
           </DialogTitle>
-          <DialogDescription className="text-center text-neutral-700 dark:text-neutral-400">
+          <DialogDescription className="text-center text-zinc-600 dark:text-zinc-400">
             Personalize your server by giving it a name and an image. You can
             always update them later.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleServerSubmit}>
           <div className="space-y-8 px-6">
-            <div className="relative flex items-center justify-center text-center">
+            <div className="flex items-center justify-center text-center">
               <FileUpload
                 endPoint="imageUploader"
-                setState={setState}
                 state={state}
+                setState={setState}
               />
             </div>
 
@@ -140,7 +112,7 @@ const CreateServerModal = () => {
                 Server Name
               </span>
               <input
-                className="block h-9 w-full appearance-none rounded-md bg-white dark:bg-neutral-950 px-3 text-sm text-black dark:text-white shadow-sm ring-1 ring-neutral-300 dark:ring-neutral-700 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-neutral-300 placeholder:italic"
+                className="block h-9 w-full appearance-none rounded-md bg-zinc-300/50 dark:bg-[#09090a] px-3 text-sm text-black dark:text-white shadow-sm ring-1 ring-gray-300 dark:ring-gray-600 placeholder:text-slate-800 dark:placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gray-900 placeholder:italic dark:focus:ring-gray-500"
                 autoFocus
                 inputMode="text"
                 autoComplete="servername"
@@ -167,7 +139,11 @@ const CreateServerModal = () => {
             ) : null}
           </p>
           <DialogFooter className="px-6 py-4">
-            <Button type="submit" className="h-9" disabled={state.loading}>
+            <Button
+              type="submit"
+              className="bg-[#09090a] dark:bg-white h-9"
+              disabled={state.loading}
+            >
               {state.isFileUploaded ? (
                 <CircleLoader
                   className="text-neutral-300 dark:text-neutral-800"
@@ -176,10 +152,10 @@ const CreateServerModal = () => {
               ) : state.loading ? (
                 <CircleLoader
                   className="text-neutral-300 dark:text-neutral-800"
-                  text="Creating server..."
+                  text="Updating server..."
                 />
               ) : (
-                "Create Server"
+                "Update Server"
               )}
             </Button>
           </DialogFooter>
@@ -189,4 +165,4 @@ const CreateServerModal = () => {
   );
 };
 
-export default CreateServerModal;
+export default EditServerModal;

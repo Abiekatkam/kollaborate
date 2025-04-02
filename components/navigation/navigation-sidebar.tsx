@@ -17,6 +17,7 @@ interface Server {
   server_name: string;
   image_url: string;
 }
+// TODO: looking odd at the bottom left corner fix it ui
 
 const NavigationSidebar = async () => {
   const user = await GetCurrentUserProfile();
@@ -39,7 +40,7 @@ const NavigationSidebar = async () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between h-full text-primary w-full py-3 bg-neutral-300/40 dark:bg-neutral-900/70">
+    <div className="flex flex-col items-center justify-between h-full text-primary w-full py-3 bg-neutral-200 dark:bg-neutral-950">
       <div className="w-full h-full flex flex-col items-center space-y-3">
         <Link
           href={CLIENT_SIDE_URL.HOME.HOMEPAGE}
@@ -61,6 +62,7 @@ const NavigationSidebar = async () => {
           ))}
         </ScrollArea>
       </div>
+      
       <div className="w-full h-fit flex flex-col items-center space-y-3">
         <NavigationActions />
         <ThemeToggle />

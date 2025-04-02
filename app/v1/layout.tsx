@@ -22,8 +22,8 @@ export default async function HomeLayout({
   }
 
   return (
-    <main className="flex h-full flex-col antialiased selection:bg-green-100 selection:text-green-600 dark:selection:bg-green-600 dark:selection:text-green-100">
-      <NextTopLoader color="#00a63e" height={2} showSpinner={false} />
+    <main className="flex h-full flex-col antialiased selection:bg-fuchsia-100 selection:text-fuchsia-600 dark:selection:bg-fuchsia-600 dark:selection:text-fuchsia-100">
+      <NextTopLoader color="#c800de" height={2} showSpinner={false} />
 
       {/* <SocketProvider userId={user?.id}> */}
       <ModalProvider />
