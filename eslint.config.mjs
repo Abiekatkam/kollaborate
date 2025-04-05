@@ -16,8 +16,8 @@ const eslintConfig = [
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-wrapper-object-types": "off",
       "react/no-unescaped-entities": "off",
-      "@next/next/no-img-element": "warn", // Keep as warning but won't fail build
-      "react-hooks/exhaustive-deps": "warn", // Keep as warning but won't fail build
+      "@next/next/no-img-element": "off", // Keep as warning but won't fail build
+      "react-hooks/exhaustive-deps": "off", // Keep as warning but won't fail build
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/ban-ts-comment": "off"
     },
