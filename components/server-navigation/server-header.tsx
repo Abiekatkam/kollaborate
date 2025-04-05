@@ -35,7 +35,7 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
       <DropdownMenuTrigger className="focus:outline-none" asChild>
         <button
           type="button"
-          className="w-full text-md font-semibold px-3 flex items-center h-12 dark:border-neutral-800 border-b-2 border-neutral-300 text-black dark:text-white hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition capitalize"
+          className="w-full text-md font-semibold px-3 flex items-center h-14 dark:border-neutral-700 border-b border-neutral-300 text-black dark:text-white hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition capitalize"
           suppressHydrationWarning={true}
         >
           {server.server_name}

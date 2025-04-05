@@ -38,17 +38,16 @@ const NavigationSidebar = async () => {
 
 
   return (
-    <div className="flex flex-col items-center justify-between h-full text-primary w-full py-3 bg-neutral-200 dark:bg-neutral-950">
-      <div className="w-full h-full flex flex-col items-center space-y-3">
+    <div className="flex flex-col items-center justify-between h-full text-primary w-full py-3 bg-neutral-200 dark:bg-neutral-900/90">
+      <div className="w-full h-full flex flex-col items-center">
         <Link
           href={CLIENT_SIDE_URL.HOME.HOMEPAGE}
-          className="w-[43px] h-[43px] text-2xl bg-neutral-900 dark:bg-neutral-50 text-neutral-50 dark:text-neutral-950 flex items-center justify-center group hover:rotate-90 rounded-full transition-all ease-in duration-200"
+          className="p-2 text-2xl bg-neutral-900 dark:bg-neutral-50 text-neutral-50 dark:text-neutral-950 flex items-center justify-center group hover:rotate-90 rounded-full transition-all ease-in duration-200"
         >
           <HiCubeTransparent className="group-hover:scale-110 transition-all ease-in-out duration-150" />
         </Link>
-        <Separator className="h-[1px] bg-neutral-300 dark:bg-neutral-700 rounded-md w-10 mx-auto" />
 
-        <ScrollArea className="flex-1 w-full">
+        <ScrollArea className="flex-1 w-full mt-6">
           {servers &&
             servers.map((server) => (
               <div key={server.id} className="mb-2">

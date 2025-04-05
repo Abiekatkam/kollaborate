@@ -93,6 +93,7 @@ model message {
   id      String  @id @default(auto()) @map("_id") @db.ObjectId
   content String
   fileUrl String?
+  fileType String?
 
   member_id String @db.ObjectId
   member    member @relation(fields: [member_id], references: [id], onDelete: Cascade)
@@ -122,6 +123,7 @@ model directmessage {
   id      String  @id @default(auto()) @map("_id") @db.ObjectId
   content String
   fileUrl String?
+  fileType String?
 
   member_id String @db.ObjectId
   member    member @relation(fields: [member_id], references: [id], onDelete: Cascade)

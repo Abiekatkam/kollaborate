@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { FileIcon, X } from "lucide-react";
 import { error } from "console";
+import { cn } from "@/lib/utils";
 
 interface FileUploadProps {
   endPoint: "imageUploader" | "messageFile";
@@ -17,13 +18,28 @@ const FileUpload = ({ endPoint, setState, state }: FileUploadProps) => {
 
   if (state.imageUrl && fileType[0] === "image") {
     return (
-      <div className="p-1 rounded-full ring-4 ring-[#09090a] dark:ring-neutral-300">
-        <div className="h-28 w-28 rounded-full relative bg-neutral-300 dark:bg-neutral-800">
+      <div
+        className={cn(
+          "ring-[#09090a] dark:ring-neutral-300",
+          endPoint === "messageFile"
+            ? "ring-2 rounded-md"
+            : "ring-4 rounded-full p-1"
+        )}
+      >
+        <div
+          className={cn(
+            "h-28 w-28 relative bg-neutral-300 dark:bg-neutral-800",
+            endPoint === "messageFile" ? "rounded-md" : "rounded-full"
+          )}
+        >
           <Image
             fill
             src={state.imageUrl}
             alt="server-image"
-            className="rounded-full"
+            className={cn(
+              endPoint === "messageFile" ? "rounded-md" : "rounded-full",
+              "object-cover"
+            )}
           />
           <Button
             type="button"
@@ -46,15 +62,15 @@ const FileUpload = ({ endPoint, setState, state }: FileUploadProps) => {
 
   if (state.imageUrl && fileType[0] === "application") {
     return (
-      <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
-        <FileIcon className="h-10 w-10 fill-green-500 stroke-green-400" />
+      <div className="relative w-48 h-48 flex flex-col items-center justify-center p-2 mt-2 rounded-md bg-neutral-200 dark:bg-neutral-800">
+        <FileIcon className="h-20 w-20 fill-neutral-200 stroke-neutral-400" />
         <a
           href={state.imageUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="ml-2 text-sm text-green-600 dark:text-green-400 hover:underline"
+          className="ml-2 text-sm font-semibold mt-2 underline text-neutral-700 dark:text-neutral-400 hover:underline"
         >
-          {state.imageUrl}
+          Preview File
         </a>
         <Button
           type="button"

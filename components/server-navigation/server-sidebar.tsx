@@ -9,6 +9,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { GetCurrentUserProfile } from "@/lib/authorisation";
 import { CLIENT_SIDE_URL } from "../constants/urls";
 import ServerHeader from "./server-header";
+import ServerSearch from "./server-search";
+import ServerSection from "./server-section";
+import ServerChannel from "./server-channel";
+import ServerMember from "./server-member";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -61,39 +65,34 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   )?.role;
 
   const channelIconConfig = {
-    [ChannelType.TEXT]: <Hash className="w-4 h-4 mr-2" />,
-    [ChannelType.AUDIO]: <Mic className="w-4 h-4 mr-2" />,
-    [ChannelType.VIDEO]: <Video className="w-4 h-4 mr-2" />,
+    [ChannelType.TEXT]: <Hash className="size-6 mr-2" />,
+    [ChannelType.AUDIO]: <Mic className="size-6 mr-2" />,
+    [ChannelType.VIDEO]: <Video className="size-6 mr-2" />,
   };
 
-
-
-//   const roleIconConfig = {
-//     [MemberRole.GUEST]: null,
-//     [MemberRole.MODERATOR]: (
-//       <ShieldCheck className="h-5 w-5 ml-2 text-indigo-700" />
-//     ),
-//     [MemberRole.ADMIN]: (
-//       <Crown className="h-5 w-5 ml-2 text-orange-400 dark:text-yellow-600" />
-//     ),
-//   };
-
-
-  
+  const roleIconConfig = {
+    [MemberRole.MEMBER]: <></>,
+    [MemberRole.COLEADER]: (
+      <ShieldCheck className="h-5 w-5 ml-2 text-indigo-700" />
+    ),
+    [MemberRole.LEADER]: (
+      <Crown className="h-5 w-5 ml-2 text-orange-400 dark:text-yellow-600" />
+    ),
+  };
 
   return (
     <div className="flex flex-col h-full text-primary w-full dark:bg-neutral-800/70 bg-neutral-200/40">
       <ServerHeader server={server} role={role} />
       <ScrollArea className="flex-1 px-3">
         <div className="mt-2">
-          {/* <ServerSearch
+          <ServerSearch
             data={[
               {
                 label: "Text Channels",
                 type: "channel",
                 data: textChannels?.map((channel) => ({
                   id: channel?.id,
-                  name: channel?.channel_name,
+                  name: channel?.channel_name || "Unnamed Channel",
                   icon: channelIconConfig[channel.type],
                 })),
               },
@@ -102,7 +101,7 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                 type: "channel",
                 data: audioChannels?.map((channel) => ({
                   id: channel?.id,
-                  name: channel?.channel_name,
+                  name: channel?.channel_name || "Unnamed Channel",
                   icon: channelIconConfig[channel.type],
                 })),
               },
@@ -111,7 +110,7 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                 type: "channel",
                 data: videoChannels?.map((channel) => ({
                   id: channel?.id,
-                  name: channel?.channel_name,
+                  name: channel?.channel_name || "Unnamed Channel",
                   icon: channelIconConfig[channel.type],
                 })),
               },
@@ -120,14 +119,14 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                 type: "member",
                 data: members?.map((member) => ({
                   id: member?.id,
-                  name: member?.user?.fullname,
+                  name: member?.user?.fullname || "Unnamed Member",
                   icon: roleIconConfig[member?.role],
                 })),
               },
             ]}
-          /> */}
+          />
         </div>
-        {/* {!!textChannels?.length && (
+        {!!textChannels?.length && (
           <div className="my-2">
             <ServerSection
               label="Text Channels"
@@ -147,7 +146,6 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             </div>
           </div>
         )}
-
         {!!audioChannels?.length && (
           <div className="my-2">
             <ServerSection
@@ -204,7 +202,7 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
               ))}
             </div>
           </div>
-        )} */}
+        )}
       </ScrollArea>
     </div>
   );

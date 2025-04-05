@@ -39,6 +39,10 @@ export const CONSTANT_MESSGAES = {
     SERVER_UPDATE_FAILED:
       "An error occurred while updating the server. Please try again.",
 
-      MEMBER_ID_MISSING: "Member ID is missing",
+    MEMBER_ID_MISSING: "Member ID is missing",
+    CHANNEL_ID_MISSING: "Channel ID is missing",
+
+    MESSAGES_FAILED_FETCHED: "Failed to fetch messages",
+    MESSAGES_FETCHED: "Messages fetched successfully",
   },
 };

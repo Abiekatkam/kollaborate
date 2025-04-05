@@ -57,14 +57,14 @@ export const ValidAuthorisation = async (
   return callback(user);
 };
 
-//   export async function getProfilePage(cookies) {
-//     const res = await fetch(`${clientUrls.host.home}/${serverUrls.user.pageprofile}`, {
-//       headers: {
-//         cookie: Object.entries(cookies).map(([name, value]) => `${name}=${value}`).join('; ')
-//       },
-//     });
-//     if (!res.ok) {
-//       return null;
-//     }
-//     return await res.json();
-//   }
+  export async function GetProfilePage(cookies: any) {
+    const res = await fetch(`${APP_CONFIGURATION.BASE_URL}/${SERVER_SIDE_URLS.USER.PAGE_PROFILE}`, {
+      headers: {
+        cookie: Object.entries(cookies).map(([name, value]) => `${name}=${value}`).join('; ')
+      },
+    });
+    if (!res.ok) {
+      return null;
+    }
+    return await res.json();
+  }
