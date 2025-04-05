@@ -44,6 +44,9 @@ export const SERVER_SIDE_URLS = {
   SERVERS: {
     INSERT: "/api/servers",
   },
+  MEMBERS: {
+    INDEX: "/api/members",
+  },
   CHANNELS: {
     INSERT: "/api/channels",
   },

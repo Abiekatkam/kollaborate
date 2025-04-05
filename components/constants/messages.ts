@@ -38,5 +38,7 @@ export const CONSTANT_MESSGAES = {
       "An error occurred while creating the server. Please try again.",
     SERVER_UPDATE_FAILED:
       "An error occurred while updating the server. Please try again.",
+
+      MEMBER_ID_MISSING: "Member ID is missing",
   },
 };

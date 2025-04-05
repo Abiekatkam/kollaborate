@@ -62,7 +62,7 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         {isLeader && (
           <DropdownMenuItem
             className=" px-3 py-2 cursor-pointer"
-            // onClick={() => onOpen("manageMembers", { server })}
+            onClick={() => onOpen("MANAGE_MEMBERS", { server })}
           >
             Manage Members <Users className="w-4 h-4 ml-auto" />
           </DropdownMenuItem>
@@ -70,7 +70,7 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         {isCoLeader && (
           <DropdownMenuItem
             className=" px-3 py-2 cursor-pointer"
-            // onClick={() => onOpen("createChannel")}
+            onClick={() => onOpen("CREATE_CHANNEL")}
           >
             Create Channels <PlusCircle className="w-4 h-4 ml-auto" />
           </DropdownMenuItem>
@@ -79,7 +79,7 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         {isLeader && (
           <DropdownMenuItem
             className="text-rose-500 px-3 py-2 cursor-pointer"
-            // onClick={() => onOpen("deleteServer", { server })}
+            onClick={() => onOpen("DELETE_SERVER", { server })}
           >
             Delete Server <Trash className="w-4 h-4 ml-auto" />
           </DropdownMenuItem>
@@ -87,7 +87,7 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         {!isLeader && (
           <DropdownMenuItem
             className="text-rose-500 px-3 py-2 cursor-pointer"
-            // onClick={() => onOpen("leaveServer", { server })}
+            onClick={() => onOpen("LEAVE_SERVER", { server })}
           >
             Leave Server <LogOut className="w-4 h-4 ml-auto" />
           </DropdownMenuItem>

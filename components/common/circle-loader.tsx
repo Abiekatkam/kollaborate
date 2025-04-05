@@ -3,7 +3,7 @@ import { PiSpinnerGap } from "react-icons/pi";
 
 interface CircleLoaderProps {
   className?: string;
-  text: string;
+  text?: string;
 }
 
 const CircleLoader: React.FC<CircleLoaderProps> = ({ className, text }) => {

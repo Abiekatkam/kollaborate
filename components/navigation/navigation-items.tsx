@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import ActionTooltip from "../common/action-tooltip";
 import { CLIENT_SIDE_URL } from "../constants/urls";
+import CircleLoader from "../common/circle-loader";
 
 interface NavigationItemsProps {
   id: string;
@@ -19,6 +20,7 @@ const NavigationItems = ({ id, imageUrl, name }: NavigationItemsProps) => {
   const redirectToSever = () => {
     router.push(`${CLIENT_SIDE_URL.HOME.SERVERS}/${id}`);
   };
+
   return (
     <ActionTooltip
       side="right"
@@ -33,7 +35,9 @@ const NavigationItems = ({ id, imageUrl, name }: NavigationItemsProps) => {
           className={cn(
             "absolute left-0 bg-primary rounded-r-full transition-all w-[4px]",
             params.serverId !== id && "group-hover:h-[20px]",
-            params.serverId === id ? "h-[36px] dark:bg-fuchsia-500 bg-fuchsia-600" : "h-[8px]"
+            params.serverId === id
+              ? "h-[36px] dark:bg-fuchsia-500 bg-fuchsia-600"
+              : "h-[8px]"
           )}
         />
         <div
@@ -43,7 +47,11 @@ const NavigationItems = ({ id, imageUrl, name }: NavigationItemsProps) => {
               "bg-primary/10 text-primary rounded-[16px] ring-3 dark:ring-fuchsia-500 ring-fuchsia-600"
           )}
         >
-          <Image fill src={imageUrl} alt="channel" />
+          {imageUrl ? (
+            <Image fill src={imageUrl} alt="channel" />
+          ) : (
+            <CircleLoader />
+          )}
         </div>
       </div>
     </ActionTooltip>

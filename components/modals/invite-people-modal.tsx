@@ -15,6 +15,7 @@ import axios from "axios";
 import { useModal } from "@/hooks/use-modal-store";
 import { string } from "zod";
 import { useOrigin } from "@/hooks/use-origin";
+import { SERVER_SIDE_URLS } from "../constants/urls";
 
 const InvitePeopleModal = () => {
   const { isOpen, onClose, type, data, onOpen } = useModal();
@@ -40,7 +41,7 @@ const InvitePeopleModal = () => {
     try {
       setIsLoading(true);
       const response = await axios.patch(
-        `/api/servers/${server?.id}/invite-code`
+        `${SERVER_SIDE_URLS.SERVERS.INSERT}/${server?.id}/invite-code`
       );
 
       onOpen("INVITE_PEOPLE", { server: response.data });

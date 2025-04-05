@@ -20,7 +20,7 @@ const UserProfile = ({ user }: any) => {
           <img
             src={user.image_url}
             alt="profile"
-            className="w-[40px] h-[40px] object-cover grayscale"
+            className="w-[40px] h-[40px] object-cover"
           />
         </div>
       </PopoverTrigger>

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { GetCurrentUserProfile } from "@/lib/authorisation";
 import prismaClient from "@/lib/prisma";
 import { redirect } from "next/navigation";
@@ -12,32 +13,29 @@ import NavigationItems from "./navigation-items";
 import { ThemeToggle } from "../common/theme-toggle";
 import UserProfile from "../common/user-profile";
 
-interface Server {
-  id: string;
-  server_name: string;
-  image_url: string;
-}
 // TODO: looking odd at the bottom left corner fix it ui
 
 const NavigationSidebar = async () => {
   const user = await GetCurrentUserProfile();
-  if (!user) {
-    return redirect("/login");
+
+  if (!user || !user.id) {
+    return redirect(CLIENT_SIDE_URL.AUTH.LOGIN);
   }
 
-  const servers = (await prismaClient.server.findMany({
+  const servers = await prismaClient.server.findMany({
     where: {
       members: {
         some: {
-          user_id: user.id,
+          user_id: user?.id,
         },
       },
     },
-  })) as Server[];
+  });
 
-  if (servers.length === 0) {
+  if (!Array.isArray(servers) || servers.length === 0) {
     return <></>;
   }
+
 
   return (
     <div className="flex flex-col items-center justify-between h-full text-primary w-full py-3 bg-neutral-200 dark:bg-neutral-950">
@@ -51,18 +49,19 @@ const NavigationSidebar = async () => {
         <Separator className="h-[1px] bg-neutral-300 dark:bg-neutral-700 rounded-md w-10 mx-auto" />
 
         <ScrollArea className="flex-1 w-full">
-          {servers?.map((server) => (
-            <div key={server.id} className="mb-2">
-              <NavigationItems
-                id={server.id}
-                name={server.server_name}
-                imageUrl={server?.image_url}
-              />
-            </div>
-          ))}
+          {servers &&
+            servers.map((server) => (
+              <div key={server.id} className="mb-2">
+                <NavigationItems
+                  id={server.id}
+                  name={server?.server_name || "untitled server"}
+                  imageUrl={server?.image_url || ""}
+                />
+              </div>
+            ))}
         </ScrollArea>
       </div>
-      
+
       <div className="w-full h-fit flex flex-col items-center space-y-3">
         <NavigationActions />
         <ThemeToggle />
