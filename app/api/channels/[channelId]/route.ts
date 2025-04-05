@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export async function DELETE(
   request: Request,
   { params }: { params: { channelId: string } }
-) {
+) : Promise<NextResponse> {
   return await ValidAuthorisation(async (user) => {
     try {
       const { channelId } = await params;
