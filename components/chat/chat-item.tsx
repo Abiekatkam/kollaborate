@@ -9,7 +9,6 @@ import {
   Trash,
 } from "lucide-react";
 import { member, MemberRole, user } from "@prisma/client";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import queryString from "query-string";
 import axios from "axios";
@@ -163,10 +162,9 @@ const ChatItem = ({
               rel="noopener noreferrer"
               className="relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary h-48 w-48"
             >
-              <Image
+              <img
                 src={fileUrl}
                 alt={content}
-                fill
                 className="object-cover"
               />
             </a>

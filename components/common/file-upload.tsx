@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { UploadDropzone } from "@/lib/uploadthing";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { FileIcon, X } from "lucide-react";
 import { error } from "console";
@@ -32,8 +31,7 @@ const FileUpload = ({ endPoint, setState, state }: FileUploadProps) => {
             endPoint === "messageFile" ? "rounded-md" : "rounded-full"
           )}
         >
-          <Image
-            fill
+          <img
             src={state.imageUrl}
             alt="server-image"
             className={cn(

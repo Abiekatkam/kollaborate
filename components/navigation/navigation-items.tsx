@@ -2,7 +2,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { useParams, useRouter } from "next/navigation";
-import Image from "next/image";
 import ActionTooltip from "../common/action-tooltip";
 import { CLIENT_SIDE_URL } from "../constants/urls";
 import CircleLoader from "../common/circle-loader";
@@ -34,8 +33,8 @@ const NavigationItems = ({ id, imageUrl, name }: NavigationItemsProps) => {
         <div
           className={cn(
             "absolute left-0 bg-primary rounded-r-full transition-all w-[4px]",
-            params.serverId !== id && "group-hover:h-[20px]",
-            params.serverId === id
+            params?.serverId !== id && "group-hover:h-[20px]",
+            params?.serverId === id
               ? "h-[36px] dark:bg-fuchsia-500 bg-fuchsia-600"
               : "h-[8px]"
           )}
@@ -43,12 +42,12 @@ const NavigationItems = ({ id, imageUrl, name }: NavigationItemsProps) => {
         <div
           className={cn(
             "relative group flex mx-3 h-[42px] w-[42px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden my-1 ring-2",
-            params.serverId === id &&
+            params?.serverId === id &&
               "bg-primary/10 text-primary rounded-[16px] ring-3 dark:ring-fuchsia-500 ring-fuchsia-600"
           )}
         >
           {imageUrl ? (
-            <Image fill src={imageUrl} alt="channel" />
+            <img src={imageUrl} alt="channel" />
           ) : (
             <CircleLoader />
           )}
