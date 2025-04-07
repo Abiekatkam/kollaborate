@@ -20,6 +20,7 @@ import { CLIENT_SIDE_URL } from "../constants/urls";
 import { UserAvatar } from "../common/user-avatar";
 import ActionTooltip from "../common/action-tooltip";
 import CircleLoader from "../common/circle-loader";
+import Image from "next/image";
 
 interface ChatItemProps {
   id: string;
@@ -162,7 +163,8 @@ const ChatItem = ({
               rel="noopener noreferrer"
               className="relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary h-48 w-48"
             >
-              <img
+              <Image
+                fill
                 src={fileUrl}
                 alt={content}
                 className="object-cover"
@@ -249,12 +251,12 @@ const ChatItem = ({
           )}
           <ActionTooltip label="Delete">
             <Trash
-                onClick={() =>
-                  onOpen("DELETE_MESSAGE", {
-                    apiUrl: `${socketUrl}/${id}`,
-                    query: socketQuery,
-                  })
-                }
+              onClick={() =>
+                onOpen("DELETE_MESSAGE", {
+                  apiUrl: `${socketUrl}/${id}`,
+                  query: socketQuery,
+                })
+              }
               className="cursor-pointer ml-auto w-4 h-4 text-neutral-500 hover:text-neutral-600 dark:hover:text-neutral-300 transition"
             />
           </ActionTooltip>

@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import ActionTooltip from "../common/action-tooltip";
 import { CLIENT_SIDE_URL } from "../constants/urls";
 import CircleLoader from "../common/circle-loader";
+import Image from "next/image";
 
 interface NavigationItemsProps {
   id: string;
@@ -47,7 +48,7 @@ const NavigationItems = ({ id, imageUrl, name }: NavigationItemsProps) => {
           )}
         >
           {imageUrl ? (
-            <img src={imageUrl} alt="channel" />
+            <Image fill src={imageUrl} alt="channel" />
           ) : (
             <CircleLoader />
           )}

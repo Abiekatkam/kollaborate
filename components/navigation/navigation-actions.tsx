@@ -10,7 +10,7 @@ const NavigationActions = () => {
   return (
     <ActionTooltip label="Add a server" align="center" side="right">
       <div
-        className="group flex items-center"
+        className="group flex items-center mt-4"
         onClick={() => onOpen("CREATE_SERVER")}
       >
         <div className="flex mx-3 h-[40px] w-[40px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden items-center justify-center bg-zinc-900 dark:bg-neutral-100 group-hover:bg-fuchsia-600 dark:group-hover:bg-fuchsia-500">

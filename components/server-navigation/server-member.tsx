@@ -6,8 +6,10 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { UserAvatar } from "../common/user-avatar";
 import { CLIENT_SIDE_URL } from "../constants/urls";
+import ActionTooltip from "../common/action-tooltip";
 
 // TODO: implement user online status
+// TODO: implement user typing effect
 
 interface ServerMemberProps {
   member: member & { user: user };
@@ -17,11 +19,9 @@ interface ServerMemberProps {
 const ServerMember = ({ member, server }: ServerMemberProps) => {
   const roleIconConfig = {
     [MemberRole.MEMBER]: null,
-    [MemberRole.COLEADER]: (
-      <ShieldCheck className="size-5 ml-4 text-indigo-700" />
-    ),
+    [MemberRole.COLEADER]: <ShieldCheck className="size-5 text-fuchsia-700" />,
     [MemberRole.LEADER]: (
-      <Crown className="size-5 ml-4 text-orange-400 dark:text-yellow-600" />
+      <Crown className="size-5 text-orange-400 dark:text-yellow-600" />
     ),
   };
 
@@ -55,7 +55,9 @@ const ServerMember = ({ member, server }: ServerMemberProps) => {
       >
         {member?.user?.fullname}
       </p>
-      {icon}
+      <ActionTooltip label={member.role} align="center">
+        {icon}
+      </ActionTooltip>
 
       {/* <UserOnlineStatus userId={member?.user?.id} type="serverlist" /> */}
     </div>

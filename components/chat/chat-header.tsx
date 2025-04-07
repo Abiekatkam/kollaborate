@@ -6,7 +6,6 @@ import SocketIndicator from "../common/socket-indicator";
 import ChatVideo from "./chat-video";
 
 // TODO: POLL option 
-// TODO: user online status
 
 interface ChatHeaderProps {
   serverId: string;

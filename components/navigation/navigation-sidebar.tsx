@@ -4,7 +4,6 @@ import prismaClient from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import React from "react";
 import { HiCubeTransparent } from "react-icons/hi";
-import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
 import Link from "next/link";
 import { CLIENT_SIDE_URL } from "../constants/urls";
@@ -12,8 +11,8 @@ import NavigationActions from "./navigation-actions";
 import NavigationItems from "./navigation-items";
 import { ThemeToggle } from "../common/theme-toggle";
 import UserProfile from "../common/user-profile";
-
-// TODO: looking odd at the bottom left corner fix it ui
+import { Button } from "../ui/button";
+import { LuMessageSquareText } from "react-icons/lu";
 
 const NavigationSidebar = async () => {
   const user = await GetCurrentUserProfile();
@@ -36,7 +35,6 @@ const NavigationSidebar = async () => {
     return <></>;
   }
 
-
   return (
     <div className="flex flex-col items-center justify-between h-full text-primary w-full py-3 bg-neutral-200 dark:bg-neutral-900/90">
       <div className="w-full h-full flex flex-col items-center">
@@ -46,7 +44,7 @@ const NavigationSidebar = async () => {
         >
           <HiCubeTransparent className="group-hover:scale-110 transition-all ease-in-out duration-150" />
         </Link>
-
+        <NavigationActions />
         <ScrollArea className="flex-1 w-full mt-6">
           {servers &&
             servers.map((server) => (
@@ -61,8 +59,10 @@ const NavigationSidebar = async () => {
         </ScrollArea>
       </div>
 
-      <div className="w-full h-fit flex flex-col items-center space-y-3">
-        <NavigationActions />
+      <div className="w-full h-fit flex flex-col items-center space-y-4">
+        {/* <Button className="flex items-center group">
+          <LuMessageSquareText className="size-4 group-hover:scale-110 transition-all ease-in-out duration-150" />
+        </Button> */}
         <ThemeToggle />
         <UserProfile user={user} />
       </div>

@@ -9,13 +9,14 @@ interface ServerIdPageProps {
 
 const ServerIdPage = async ({ params }: ServerIdPageProps) => {
   const user = await GetCurrentUserProfile();
+  const { serverId } = await params;
   if (!user) {
     return redirect(CLIENT_SIDE_URL.AUTH.LOGIN);
   }
 
   const server = await prismaClient.server.findUnique({
     where: {
-      id: params.serverId,
+      id: serverId,
       members: {
         some: {
           user_id: user?.id,
@@ -40,7 +41,7 @@ const ServerIdPage = async ({ params }: ServerIdPageProps) => {
     return redirect(CLIENT_SIDE_URL.HOME.INDEX);
   }
   return redirect(
-    `${CLIENT_SIDE_URL.HOME.SERVERS}/${params?.serverId}/channels/${initialChannel?.id}`
+    `${CLIENT_SIDE_URL.HOME.SERVERS}/${serverId}/channels/${initialChannel?.id}`
   );
 };
 

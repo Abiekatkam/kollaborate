@@ -31,6 +31,7 @@ import {
 
 import { ThemeToggle } from "@/components/common/theme-toggle";
 import ToggleAuthButton from "@/components/common/toggle-auth";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -146,7 +147,9 @@ export default function Home() {
               className={`break-inside-avoid rounded-xl p-6 shadow-sm hover:shadow-md border hover:bg-secondary dark:hover:bg-primary-foreground transition-all ease-in duration-150`}
             >
               <div className="flex items-center gap-4 mb-1 relative z-10">
-                <img
+                <Image
+                  width={48}
+                  height={48}
                   src={review.avatar}
                   alt={review.author}
                   className="w-12 h-12 rounded-full object-cover grayscale"

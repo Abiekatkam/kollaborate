@@ -49,7 +49,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .toUpperCase();
       const imageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
         initials
-      )}&background=random`;
+      )}&background=random&format=png`;
       existingUser = await prismaClient.user.create({
         data: { email, fullname, image_url: imageUrl },
       });

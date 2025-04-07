@@ -25,6 +25,7 @@ const ConversationIdPage = async ({
 }: ConversationIdPageProps) => {
   const user = await GetCurrentUserProfile();
   const { serverId, memberId } = await params;
+  const { video } = await searchParams;
   if (!user) {
     return redirect(CLIENT_SIDE_URL.AUTH.LOGIN);
   }
@@ -65,7 +66,7 @@ const ConversationIdPage = async ({
         type="conversation"
         userId={otherMember?.user?.id}
       />
-      {!searchParams.video && (
+      {!video && (
         <>
           <ChatMessages
             member={currentMember}
@@ -92,7 +93,7 @@ const ConversationIdPage = async ({
         </>
       )}
 
-      {searchParams?.video && (
+      {video && (
         <>
           <RoomContainer
             chatId={conversation.id}

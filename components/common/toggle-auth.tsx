@@ -8,6 +8,8 @@ import { Button } from "../ui/button";
 import { LuMessageSquareText } from "react-icons/lu";
 
 // TODO: Complete the functionality of feedback component
+// TODO: Chat reaction
+// TODO: New message notification
 
 const ToggleAuthButton = () => {
   const [isCookieAvailable, setIsCookieAvailable] = useState(false);

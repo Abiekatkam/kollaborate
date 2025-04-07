@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { FileIcon, X } from "lucide-react";
 import { error } from "console";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface FileUploadProps {
   endPoint: "imageUploader" | "messageFile";
@@ -31,7 +32,8 @@ const FileUpload = ({ endPoint, setState, state }: FileUploadProps) => {
             endPoint === "messageFile" ? "rounded-md" : "rounded-full"
           )}
         >
-          <img
+          <Image
+            fill
             src={state.imageUrl}
             alt="server-image"
             className={cn(

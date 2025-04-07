@@ -62,6 +62,15 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
             placeholder={`Send your message to ${type === "channel" ? "#" + name + " channel." : name}`}
             value={state.content}
             onChange={(e) => setState({ ...state, content: e.target.value })}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                const fakeEvent = {
+                  preventDefault: () => {},
+                } as React.FormEvent<HTMLFormElement>;
+                handleSubmit(fakeEvent);
+              }
+            }}
           />
         </div>
         <div className="flex items-center mt-2 px-2 gap-x-2">
