@@ -50,7 +50,7 @@ const ManageMemberModal = () => {
 
   const RoleIconConfig = {
     MEMBER: null,
-    COLEADER: <ShieldCheck className="h-5 w-5 ml-2 text-fuchsia-700" />,
+    COLEADER: <ShieldCheck className="h-5 w-5 ml-2 text-green-700" />,
     LEADER: (
       <Crown className="h-5 w-5 ml-2 text-orange-400 dark:text-yellow-600" />
     ),
@@ -99,7 +99,7 @@ const ManageMemberModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={() => onClose()}>
-      <DialogContent className="sm:max-w-md border-2 dark:border-neutral-700 border-neutral-400 selection:bg-fuchsia-100 selection:text-fuchsia-600 dark:selection:bg-fuchsia-600 dark:selection:text-fuchsia-100">
+      <DialogContent className="sm:max-w-md border-2 dark:border-neutral-700 border-neutral-400 selection:bg-green-100 selection:text-green-600 dark:selection:bg-green-600 dark:selection:text-green-100">
         <DialogHeader className="pt-3 px-6">
           <DialogTitle className="text-xl text-center capitalize font-bold">
             Manage Members

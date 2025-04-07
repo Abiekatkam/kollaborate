@@ -35,7 +35,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="relative h-full selection:bg-fuchsia-100 selection:text-fuchsia-600 dark:bg-black bg-white">
+    <div className="relative h-full selection:bg-green-100 selection:text-green-600 dark:bg-black bg-white">
       <header className="relative m-auto h-[56px] max-w-7xl pt-3">
         <div className="absolute left-0 right-0 top-3 z-20 flex items-center justify-between">
           <Link
@@ -163,7 +163,7 @@ export default function Home() {
                   </span>
                   <div className="flex -mt-1">
                     {Array.from({ length: review.ratings }).map((_, index) => (
-                      <span key={index} className="text-fuchsia-500 text-lg">
+                      <span key={index} className="text-green-500 text-lg">
                         ★
                       </span>
                     ))}
@@ -220,7 +220,7 @@ export default function Home() {
                 target="_blank"
                 className="text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
               >
-                <link.Icon className="size-6 hover:text-fuchsia-500 transition-all ease-in duration-150" />
+                <link.Icon className="size-6 hover:text-green-500 transition-all ease-in duration-150" />
               </a>
             </span>
           ))}

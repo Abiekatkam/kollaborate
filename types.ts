@@ -1,4 +1,4 @@
-import { member, message, server, user } from "@prisma/client";
+import { member, message, pollVote, server, user } from "@prisma/client";
 import { Server as NetServer, Socket } from "net";
 import { Server as SocketIOServer } from "socket.io";
 import { NextApiResponse } from "next";
@@ -19,4 +19,5 @@ export type MessageWithMemberWithProfile = message & {
   member: member & {
     user: user;
   };
+  pollVotes?: pollVote[];
 }

@@ -22,6 +22,7 @@ model user {
   servers  server[]
   members  member[]
   channels channel[]
+  pollVotes pollVote[]
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
@@ -89,24 +90,6 @@ model channel {
   updated_at DateTime @default(now()) @updatedAt
 }
 
-model message {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  content String
-  fileUrl String?
-  fileType String?
-
-  member_id String @db.ObjectId
-  member    member @relation(fields: [member_id], references: [id], onDelete: Cascade)
-
-  channel_id String  @db.ObjectId
-  channel    channel @relation(fields: [channel_id], references: [id], onDelete: Cascade)
-
-  is_deleted Boolean @default(false)
-
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
-}
-
 model conversation {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -119,11 +102,37 @@ model conversation {
   direct_messages directmessage[]
 }
 
+model message {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  content       String
+  fileUrl       String?
+  fileType      String?
+  isPollMessage Boolean    @default(false)
+  pollQuestion  String?
+  pollOptions   String[]
+
+  member_id String @db.ObjectId
+  member    member @relation(fields: [member_id], references: [id], onDelete: Cascade)
+
+  channel_id String  @db.ObjectId
+  channel    channel @relation(fields: [channel_id], references: [id], onDelete: Cascade)
+
+  is_deleted Boolean @default(false)
+
+  pollVotes pollVote[] 
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}
+
 model directmessage {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  content String
-  fileUrl String?
-  fileType String?
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  content       String
+  fileUrl       String?
+  fileType      String?
+  isPollMessage Boolean    @default(false)
+  pollQuestion  String?
+  pollOptions   String[]
 
   member_id String @db.ObjectId
   member    member @relation(fields: [member_id], references: [id], onDelete: Cascade)
@@ -133,6 +142,26 @@ model directmessage {
 
   is_deleted Boolean @default(false)
 
+  pollVotes pollVote[]
+
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 }
+
+model pollVote {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+
+  message_id        String?         @db.ObjectId
+  message           message?        @relation(fields: [message_id], references: [id], onDelete: Cascade)
+
+  directMessage_id  String?         @db.ObjectId
+  directmessage     directmessage?  @relation(fields: [directMessage_id], references: [id], onDelete: Cascade)
+
+  userId            String          @db.ObjectId
+  user              user            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  option            String
+
+  created_at        DateTime        @default(now())
+}
+

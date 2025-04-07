@@ -19,7 +19,7 @@ interface ServerMemberProps {
 const ServerMember = ({ member, server }: ServerMemberProps) => {
   const roleIconConfig = {
     [MemberRole.MEMBER]: null,
-    [MemberRole.COLEADER]: <ShieldCheck className="size-5 text-fuchsia-700" />,
+    [MemberRole.COLEADER]: <ShieldCheck className="size-5 text-green-700" />,
     [MemberRole.LEADER]: (
       <Crown className="size-5 text-orange-400 dark:text-yellow-600" />
     ),

@@ -16,18 +16,26 @@ export default async function handler(
     const cookies = parse(request.headers.cookie || "");
     const user = await GetProfilePage(cookies);
 
-    const { content, fileUrl, fileType } = request.body;
-
+    const {
+      content,
+      fileUrl,
+      fileType,
+      isPollMessage,
+      pollQuestion,
+      pollOptions,
+    } = request.body;
     const { conversationId } = request.query;
 
     if (!user) {
       return response.status(401).json({ error: "Unauthorized" });
     }
+
     if (!conversationId) {
       return response.status(400).json({ error: "Conversation ID is missing" });
     }
-    if (!content) {
-      return response.status(400).json({ error: "Content missing" });
+
+    if (!content && !isPollMessage) {
+      return response.status(400).json({ error: "Content is missing" });
     }
 
     const conversation = await prismaClient.conversation.findFirst({
@@ -35,16 +43,8 @@ export default async function handler(
         id: conversationId as string,
       },
       include: {
-        memberOne: {
-          include: {
-            user: true,
-          },
-        },
-        memberTwo: {
-          include: {
-            user: true,
-          },
-        },
+        memberOne: { include: { user: true } },
+        memberTwo: { include: { user: true } },
       },
     });
 
@@ -55,7 +55,7 @@ export default async function handler(
     if (!conversation || !isMember) {
       return response.status(400).json({
         error:
-          "Conversation not found or You are not a part od this conversation.",
+          "Conversation not found or You are not a part of this conversation.",
       });
     }
 
@@ -75,6 +75,9 @@ export default async function handler(
         fileType,
         conversation_id: conversationId as string,
         member_id: member.id,
+        isPollMessage: !!isPollMessage,
+        pollQuestion: isPollMessage ? pollQuestion : undefined,
+        pollOptions: isPollMessage ? pollOptions : undefined,
       },
       include: {
         member: { include: { user: true } },

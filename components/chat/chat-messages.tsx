@@ -83,6 +83,8 @@ const ChatMessages = ({
     );
   }
 
+  console.log("chat messages", data);
+
   return (
     <div
       ref={chatRef}
@@ -120,6 +122,10 @@ const ChatMessages = ({
                 fileUrl={message.fileUrl}
                 fileType={message.fileType}
                 deleted={message.is_deleted}
+                isPollMessage={message.isPollMessage}
+                pollQuestion={message.pollQuestion as string}
+                pollOptions={message.pollOptions}
+                pollVotes={message.pollVotes as string[] | undefined}
                 timestamp={format(new Date(message.created_at), DATE_FORMAT)}
                 isUpdated={message.updated_at !== message.created_at}
                 socketUrl={socketUrl}

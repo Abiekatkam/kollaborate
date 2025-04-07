@@ -45,7 +45,7 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
       <DropdownMenuContent className="w-72 dark:bg-[#09090a] text-lg font-medium text-black dark:text-neutral-400 space-y-[2px]">
         {isCoLeader && (
           <DropdownMenuItem
-            className="text-fuchsia-800 dark:text-fuchsia-400 px-3 py-2 cursor-pointer"
+            className="text-green-800 dark:text-green-400 px-3 py-2 cursor-pointer"
             onClick={() => onOpen("INVITE_PEOPLE", { server })}
           >
             Invite People <UserPlus className="w-4 h-4 ml-auto" />

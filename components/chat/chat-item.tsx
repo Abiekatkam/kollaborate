@@ -32,6 +32,10 @@ interface ChatItemProps {
   fileUrl?: string | null;
   fileType?: string | null;
   deleted?: boolean;
+  isPollMessage?: boolean;
+  pollOptions?: string[];
+  pollQuestion?: string;
+  pollVotes?: string[];
   currentMember: member;
   isUpdated?: boolean;
   socketUrl: string;
@@ -46,6 +50,10 @@ const ChatItem = ({
   fileUrl,
   fileType,
   deleted,
+  isPollMessage,
+  pollQuestion,
+  pollOptions,
+  pollVotes,
   currentMember,
   isUpdated,
   socketUrl,
@@ -174,12 +182,12 @@ const ChatItem = ({
 
           {isPdf && (
             <div className="relative flex items-center p-2 mt-2  rounded-md bg-background/10">
-              <FileIcon className="h-10 w-10 fill-fuchsia-500 stroke-fuchsia-400" />
+              <FileIcon className="h-10 w-10 fill-green-500 stroke-green-400" />
               <a
                 href={fileUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ml-2 text-sm text-fuchsia-600 dark:text-fuchsia-400 hover:underline"
+                className="ml-2 text-sm text-green-600 dark:text-green-400 hover:underline"
               >
                 PDF Attachment
               </a>
@@ -187,20 +195,44 @@ const ChatItem = ({
           )}
 
           {!fileUrl && !isEditing && (
-            <p
-              className={cn(
-                "text-sm text-neutral-600 dark:text-neutral-300",
-                deleted &&
-                  "italic text-neutral-500 dark:text-neutral-400 text-xs mt-1"
+            <>
+              <p
+                className={cn(
+                  "text-sm text-neutral-600 dark:text-neutral-300",
+                  deleted &&
+                    "italic text-neutral-500 dark:text-neutral-400 text-xs mt-1"
+                )}
+              >
+                {content}
+                {isUpdated && !deleted && (
+                  <span className="text-[10px] mx-2 text-neutral-500 dark:text-neutral-400">
+                    (edited)
+                  </span>
+                )}
+              </p>
+              {isPollMessage && (
+                <div className="flex md:w-[400px] w-full items-start p-2 gap-y-2">
+                  <div className="flex flex-col items-start p-3 bg-neutral-200 dark:bg-neutral-700/50 rounded-md w-full">
+                    <label className="mb-2 block w-full">
+                      <span className="mb-1 block text-lg font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+                        {pollQuestion}
+                      </span>
+                    </label>
+
+                    <div className="flex flex-wrap flex-row items-start gap-2 w-full">
+                      {pollOptions?.map((option, index) => (
+                        <div
+                          key={index}
+                          className="relative group p-2 border-2 border-neutral-400 rounded-md w-[48%]"
+                        >
+                          <label className="block w-full">{option}</label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               )}
-            >
-              {content}
-              {isUpdated && !deleted && (
-                <span className="text-[10px] mx-2 text-neutral-500 dark:text-neutral-400">
-                  (edited)
-                </span>
-              )}
-            </p>
+            </>
           )}
 
           {!fileUrl && isEditing && (

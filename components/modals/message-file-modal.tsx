@@ -85,7 +85,7 @@ const MessageFileModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleCloseModal}>
-      <DialogContent className="sm:max-w-md p-0 border-2 dark:border-neutral-700 border-neutral-400 selection:bg-fuchsia-100 selection:text-fuchsia-600 dark:selection:bg-fuchsia-600 dark:selection:text-fuchsia-100">
+      <DialogContent className="sm:max-w-md p-0 border-2 dark:border-neutral-700 border-neutral-400 selection:bg-green-100 selection:text-green-600 dark:selection:bg-green-600 dark:selection:text-green-100">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-xl text-center capitalize font-bold">
             Upload Attachments

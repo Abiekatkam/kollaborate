@@ -36,7 +36,7 @@ const NavigationItems = ({ id, imageUrl, name }: NavigationItemsProps) => {
             "absolute left-0 bg-primary rounded-r-full transition-all w-[4px]",
             params?.serverId !== id && "group-hover:h-[20px]",
             params?.serverId === id
-              ? "h-[36px] dark:bg-fuchsia-500 bg-fuchsia-600"
+              ? "h-[36px] dark:bg-green-500 bg-green-600"
               : "h-[8px]"
           )}
         />
@@ -44,7 +44,7 @@ const NavigationItems = ({ id, imageUrl, name }: NavigationItemsProps) => {
           className={cn(
             "relative group flex mx-3 h-[42px] w-[42px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden my-1 ring-2",
             params?.serverId === id &&
-              "bg-primary/10 text-primary rounded-[16px] ring-3 dark:ring-fuchsia-500 ring-fuchsia-600"
+              "bg-primary/10 text-primary rounded-[16px] ring-3 dark:ring-green-500 ring-green-600"
           )}
         >
           {imageUrl ? (
