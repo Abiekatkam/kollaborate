@@ -21,6 +21,7 @@ import { UserAvatar } from "../common/user-avatar";
 import ActionTooltip from "../common/action-tooltip";
 import CircleLoader from "../common/circle-loader";
 import Image from "next/image";
+import { ChatPollView } from "./chat-poll-view";
 
 interface ChatItemProps {
   id: string;
@@ -109,7 +110,7 @@ const ChatItem = ({
   const isCoLeader = currentMember.role === MemberRole.COLEADER;
   const isOwner = currentMember.id === member.id;
   const canDeleteMessage = !deleted && (isLeader || isOwner || isCoLeader);
-  const canEditMessage = !deleted && isOwner && !fileUrl;
+  const canEditMessage = !deleted && isOwner && !fileUrl && !isPollMessage;
   const isPdf = fileType === "application/pdf" && fileUrl;
   const isImage = !isPdf && fileUrl;
 
@@ -134,6 +135,19 @@ const ChatItem = ({
       setState({ ...state, loading: false });
     }
   };
+
+  const voteCountMap = pollOptions?.reduce(
+    (acc: Record<string, number>, option: string) => {
+      acc[option] = pollVotes?.filter((vote: any) => vote.option === option)
+        .length as number;
+      return acc;
+    },
+    {}
+  );
+
+  const userVoted = pollVotes?.find(
+    (vote: any) => vote.userId === member?.user?.id && vote.option
+  )?.option as string;
 
   return (
     <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
@@ -211,31 +225,21 @@ const ChatItem = ({
                 )}
               </p>
               {isPollMessage && (
-                <div className="flex md:w-[400px] w-full items-start p-2 gap-y-2">
-                  <div className="flex flex-col items-start p-3 bg-neutral-200 dark:bg-neutral-700/50 rounded-md w-full">
-                    <label className="mb-2 block w-full">
-                      <span className="mb-1 block text-lg font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
-                        {pollQuestion}
-                      </span>
-                    </label>
-
-                    <div className="flex flex-wrap flex-row items-start gap-2 w-full">
-                      {pollOptions?.map((option, index) => (
-                        <div
-                          key={index}
-                          className="relative group p-2 border-2 border-neutral-400 rounded-md w-[48%]"
-                        >
-                          <label className="block w-full">{option}</label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <ChatPollView
+                  id={id}
+                  pollQuestion={pollQuestion as string}
+                  pollOptions={pollOptions as string[]}
+                  pollVotes={voteCountMap as Record<string, number>}
+                  userVotedOption={userVoted}
+                  isPollMessage={isPollMessage}
+                  socketUrl={socketUrl}
+                  socketQuery={socketQuery}
+                />
               )}
             </>
           )}
 
-          {!fileUrl && isEditing && (
+          {!fileUrl && !isPollMessage && isEditing && (
             <>
               {" "}
               <form

@@ -13,8 +13,6 @@ import { MessageWithMemberWithProfile } from "@/types";
 import ChatItem from "./chat-item";
 import { useChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
-// import { useChatSocket } from "@/store/use-chat-socket";
-// import { useChatScroll } from "@/store/use-chat-scroll";
 
 interface ChatMessagesProps {
   name: string;
@@ -82,8 +80,6 @@ const ChatMessages = ({
       </div>
     );
   }
-
-  console.log("chat messages", data);
 
   return (
     <div

@@ -163,5 +163,9 @@ model pollVote {
   option            String
 
   created_at        DateTime        @default(now())
+
+  @@unique([message_id, userId])
+  @@unique([directMessage_id, userId])
 }
+
 

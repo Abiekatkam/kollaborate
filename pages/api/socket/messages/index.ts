@@ -13,20 +13,30 @@ export default async function handler(
 
   try {
     const user = await GetProfilePage(request.cookies);
-    const { content, fileUrl, fileType } = request.body;
-    const { serverId, channelId } = await request.query;
+    const {
+      content,
+      fileUrl,
+      fileType,
+      isPollMessage,
+      pollQuestion,
+      pollOptions,
+    } = request.body;
+    const { serverId, channelId } = request.query;
 
     if (!user) {
       return response.status(401).json({ error: "Unauthorised" });
     }
+
     if (!serverId) {
       return response.status(400).json({ error: "Server ID is missing" });
     }
+
     if (!channelId) {
       return response.status(400).json({ error: "Channel ID is missing" });
     }
-    if (!content) {
-      return response.status(400).json({ error: "Content missing" });
+
+    if (!content && !isPollMessage) {
+      return response.status(400).json({ error: "Content is missing" });
     }
 
     const server = await prismaClient.server.findFirst({
@@ -53,11 +63,12 @@ export default async function handler(
         server_id: serverId as string,
       },
     });
+
     if (!channel) {
       return response.status(400).json({ error: "Channel not found." });
     }
 
-    const member = server?.members.find((member) => member.user_id === user.id);
+    const member = server.members.find((m) => m.user_id === user.id);
 
     if (!member) {
       return response.status(400).json({ error: "Member not found." });
@@ -67,7 +78,10 @@ export default async function handler(
       data: {
         content,
         fileUrl,
-        fileType: fileType,
+        fileType,
+        isPollMessage: !!isPollMessage,
+        pollQuestion: isPollMessage ? pollQuestion : undefined,
+        pollOptions: isPollMessage ? pollOptions : undefined,
         channel_id: channelId as string,
         member_id: member.id,
       },
@@ -82,7 +96,7 @@ export default async function handler(
 
     const channelKey = `chat:${channelId}:messages`;
     response?.socket?.server?.io?.emit(channelKey, message);
-    return response.status(200).json(message);          
+    return response.status(200).json(message);
   } catch (error) {
     console.log("[MESSAGES_POST]:", error);
     return response.status(500).json({ error: "Internal server error" });

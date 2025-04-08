@@ -75,7 +75,7 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
         loading: true,
         isPollMessage: isPollMode,
       }));
-    
+
       await axios.post(url, {
         content: state.content,
         fileUrl: state.fileUrl,
