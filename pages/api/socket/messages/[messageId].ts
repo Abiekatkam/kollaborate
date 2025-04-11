@@ -10,7 +10,9 @@ export default async function handler(
   response: NextApiResponseSocketIo
 ) {
   if (request.method !== "PATCH" && request.method !== "DELETE") {
-    return response.status(405).json({ error: "This is not a Patch or Delete method" });
+    return response
+      .status(405)
+      .json({ error: "This is not a Patch or Delete method" });
   }
 
   try {
@@ -21,7 +23,9 @@ export default async function handler(
 
     if (!user) return response.status(401).json({ error: "Unauthorised" });
     if (!serverId || !channelId || !messageId) {
-      return response.status(400).json({ error: "Missing required parameters." });
+      return response
+        .status(400)
+        .json({ error: "Missing required parameters." });
     }
 
     const server = await prismaClient.server.findFirst({
@@ -36,7 +40,8 @@ export default async function handler(
       },
     });
 
-    if (!server) return response.status(400).json({ error: "Server not found." });
+    if (!server)
+      return response.status(400).json({ error: "Server not found." });
 
     const channel = await prismaClient.channel.findFirst({
       where: {
@@ -45,10 +50,12 @@ export default async function handler(
       },
     });
 
-    if (!channel) return response.status(400).json({ error: "Channel not found." });
+    if (!channel)
+      return response.status(400).json({ error: "Channel not found." });
 
     const member = server.members.find((m) => m.user_id === user.id);
-    if (!member) return response.status(400).json({ error: "Member not found." });
+    if (!member)
+      return response.status(400).json({ error: "Member not found." });
 
     let message = await prismaClient.message.findFirst({
       where: {
@@ -68,7 +75,8 @@ export default async function handler(
     const isMessageOwner = message.member_id === member.id;
     const isLeader = member.role === MemberRole.LEADER;
     const isCoLeader = member.role === MemberRole.COLEADER;
-    const canModify = isMessageOwner || isLeader || isCoLeader;
+    const canModify =
+      isMessageOwner || isLeader || isCoLeader || message.isPollMessage;
 
     if (!canModify) {
       return response.status(401).json({ error: "Unauthorised" });
@@ -98,10 +106,10 @@ export default async function handler(
 
       // Poll voting
       if (message.isPollMessage && selectedOption) {
-        await prismaClient.pollVote.upsert({
+        await prismaClient.messagePollVote.upsert({
           where: {
             message_id_userId: {
-              message_id: message.id,
+              message_id: message.id as string,
               userId: user.id,
             },
           },
@@ -109,11 +117,12 @@ export default async function handler(
             option: selectedOption,
           },
           create: {
-            message_id: message.id,
+            message_id: message.id as string,
             userId: user.id,
             option: selectedOption,
           },
         });
+        
 
         // Refetch message with updated votes
         message = await prismaClient.message.findFirst({

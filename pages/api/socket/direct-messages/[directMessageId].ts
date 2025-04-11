@@ -60,7 +60,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       },
       include: {
         member: { include: { user: true } },
-        pollVotes: { include: { user: true } }, 
+        pollVotes : { include: { user: true } }, 
       },
     });
 
@@ -71,7 +71,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const isMessageOwner = message.member_id === member.id;
     const isLeader = member.role === MemberRole.LEADER;
     const isCoLeader = member.role === MemberRole.COLEADER;
-    const canModify = isMessageOwner || isLeader || isCoLeader;
+    const canModify = isMessageOwner || isLeader || isCoLeader || message.isPollMessage;
 
     if (!canModify) {
       return response.status(401).json({ error: "Unauthorised" });
@@ -89,7 +89,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         },
         include: {
           member: { include: { user: true } },
-          pollVotes: { include: { user: true } },
+          pollVotes : { include: { user: true } },
         },
       });
     }
@@ -100,7 +100,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       }
 
       if (message.isPollMessage && selectedOption) {
-        await prismaClient.pollVote.upsert({
+        await prismaClient.directPollVote.upsert({
           where: {
             directMessage_id_userId: {
               directMessage_id: directMessageId as string,
@@ -116,6 +116,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
             option: selectedOption,
           },
         });
+        
 
         // 👇 Refetch message with updated votes
         message = await prismaClient.directmessage.findFirst({
@@ -125,7 +126,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
           },
           include: {
             member: { include: { user: true } },
-            pollVotes: { include: { user: true } },
+            pollVotes : { include: { user: true } },
           },
         });
       } else {
@@ -139,7 +140,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
           },
           include: {
             member: { include: { user: true } },
-            pollVotes: { include: { user: true } },
+            pollVotes : { include: { user: true } },
           },
         });
       }

@@ -70,6 +70,7 @@ const ConversationIdPage = async ({
         <>
           <ChatMessages
             member={currentMember}
+            currentUser={user}
             name={otherMember.user.fullname as string}
             chatId={conversation.id}
             type="conversation"

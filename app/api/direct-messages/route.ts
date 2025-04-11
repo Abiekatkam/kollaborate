@@ -43,7 +43,7 @@ export async function GET(request: Request) {
                 user: true,
               },
             },
-            pollVotes: true,
+            pollVotes : true,
           },
           orderBy: {
             created_at: "desc",
@@ -61,7 +61,7 @@ export async function GET(request: Request) {
                 user: true,
               },
             },
-            pollVotes: true,
+            pollVotes : true,
           },
           orderBy: {
             created_at: "desc",

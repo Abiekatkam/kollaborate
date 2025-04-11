@@ -1,11 +1,10 @@
 "use client";
 import React, { ElementRef, RefObject, useRef } from "react";
-// import { useChatQuery } from "@/store/use-chat-query";
 import { Loader2, ServerCrash } from "lucide-react";
 import { Fragment } from "react";
 // import ChatItem from "./ChatItem";
 import { format } from "date-fns";
-import { member } from "@prisma/client";
+import { directPollVote, member, messagePollVote, user } from "@prisma/client";
 import { useChatQuery } from "@/hooks/use-chat-query";
 import ChatIntro from "./chat-intro";
 import CircleLoader from "../common/circle-loader";
@@ -17,6 +16,7 @@ import { useChatScroll } from "@/hooks/use-chat-scroll";
 interface ChatMessagesProps {
   name: string;
   member: member;
+  currentUser: user;
   chatId: string;
   apiUrl: string;
   socketUrl: string;
@@ -29,6 +29,7 @@ interface ChatMessagesProps {
 const ChatMessages = ({
   name,
   member,
+  currentUser,
   chatId,
   apiUrl,
   socketUrl,
@@ -114,6 +115,7 @@ const ChatMessages = ({
                 key={message.id}
                 id={message.id}
                 currentMember={member}
+                currentUser={currentUser}
                 content={message.content}
                 fileUrl={message.fileUrl}
                 fileType={message.fileType}

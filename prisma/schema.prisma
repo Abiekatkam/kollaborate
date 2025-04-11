@@ -22,7 +22,8 @@ model user {
   servers  server[]
   members  member[]
   channels channel[]
-  pollVotes pollVote[]
+  messagePollVotes messagePollVote[]
+  directPollVotes directPollVote[] 
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
@@ -119,7 +120,7 @@ model message {
 
   is_deleted Boolean @default(false)
 
-  pollVotes pollVote[] 
+  pollVotes  messagePollVote[]
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
@@ -142,20 +143,17 @@ model directmessage {
 
   is_deleted Boolean @default(false)
 
-  pollVotes pollVote[]
+  pollVotes  directPollVote[] 
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 }
 
-model pollVote {
+model directPollVote {
   id                String          @id @default(auto()) @map("_id") @db.ObjectId
 
-  message_id        String?         @db.ObjectId
-  message           message?        @relation(fields: [message_id], references: [id], onDelete: Cascade)
-
-  directMessage_id  String?         @db.ObjectId
-  directmessage     directmessage?  @relation(fields: [directMessage_id], references: [id], onDelete: Cascade)
+  directMessage_id  String          @db.ObjectId
+  directmessage     directmessage   @relation(fields: [directMessage_id], references: [id], onDelete: Cascade)
 
   userId            String          @db.ObjectId
   user              user            @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -164,8 +162,23 @@ model pollVote {
 
   created_at        DateTime        @default(now())
 
-  @@unique([message_id, userId])
   @@unique([directMessage_id, userId])
+}
+
+model messagePollVote {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  message_id  String    @db.ObjectId
+  message     message   @relation(fields: [message_id], references: [id], onDelete: Cascade)
+
+  userId      String    @db.ObjectId
+  user        user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  option      String
+
+  created_at  DateTime  @default(now())
+
+  @@unique([message_id, userId])
 }
 
 

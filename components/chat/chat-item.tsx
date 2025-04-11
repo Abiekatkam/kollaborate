@@ -1,10 +1,9 @@
 "use client";
-import React, { ReactHTMLElement, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import {
   Crown,
   Edit,
   FileIcon,
-  SendHorizonal,
   ShieldCheck,
   Trash,
 } from "lucide-react";
@@ -36,8 +35,9 @@ interface ChatItemProps {
   isPollMessage?: boolean;
   pollOptions?: string[];
   pollQuestion?: string;
-  pollVotes?: string[];
+  pollVotes?: string[] | undefined;
   currentMember: member;
+  currentUser: user;
   isUpdated?: boolean;
   socketUrl: string;
   socketQuery?: Record<string, string>;
@@ -56,6 +56,7 @@ const ChatItem = ({
   pollOptions,
   pollVotes,
   currentMember,
+  currentUser,
   isUpdated,
   socketUrl,
   socketQuery,
@@ -138,15 +139,14 @@ const ChatItem = ({
 
   const voteCountMap = pollOptions?.reduce(
     (acc: Record<string, number>, option: string) => {
-      acc[option] = pollVotes?.filter((vote: any) => vote.option === option)
-        .length as number;
+      acc[option] = pollVotes?.filter((vote: any) => vote.option === option).length || 0;
       return acc;
     },
-    {}
+    {} as Record<string, number>
   );
 
   const userVoted = pollVotes?.find(
-    (vote: any) => vote.userId === member?.user?.id && vote.option
+    (vote: any) => vote.userId === currentUser?.id && vote.option
   )?.option as string;
 
   return (
